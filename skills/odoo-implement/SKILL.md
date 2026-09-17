@@ -52,21 +52,15 @@ skill({ name: "odoo-worktree-setup" })
 Ensures container, database, Caddy routing, and env vars are correct.
 No-op if not a worktree.
 
-### Phase 0.5: Version-Specific Reference
+### Phase 0.5: Guidelines Reference
 
-Detect the Odoo version, then load the matching skill:
+Load the house rules skill:
 
-```bash
-grep "image: odoo" docker-compose.yml | grep -oE '[0-9]+' | head -1
+```
+skill({ name: "odoo-guidelines" })
 ```
 
-| Result | Action |
-|--------|--------|
-| `18`   | `skill({ name: "odoo-18" })` |
-| `19`   | `skill({ name: "odoo-19" })` |
-| other / not found | Proceed without version skill; state the assumption in your output |
-
-The loaded skill provides version-pinned ORM patterns, view syntax (e.g. `<list>` vs `<tree>`), field API, security patterns, and OWL conventions. Apply this knowledge throughout Phase 2 implementation — do **not** mix conventions from different versions.
+Provides module structure, manifest, Python/ORM, fields, controllers, XML views and data, QWeb reports, access rights, performance, and tests conventions. Apply this knowledge throughout Phase 2 implementation — do **not** mix conventions from different versions.
 
 ### Phase 1: Proposal
 
@@ -89,7 +83,7 @@ Work through all tasks, marking complete as you go.
 
 While implementing, proactively apply patterns from two sources:
 
-1. **Version-specific skill** (loaded in Phase 0.5) — consult for ORM API, view syntax, field types, security, OWL patterns that are specific to the detected Odoo version.
+1. **Guidelines skill** (loaded in Phase 0.5) — consult for ORM API, view syntax, field types, security, OWL patterns, and house rules.
 2. **`reference-phase1.md`** — deployment cycle, mixins, widgets, OCA standards, module structure, code correctness checklist.
 
 Key checklist items (from reference-phase1.md):
