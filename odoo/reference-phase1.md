@@ -631,23 +631,19 @@ addons/<module>/
 
 ### Shared Odoo Source
 
+Supported versions: **17.0, 18.0, 19.0, 20.0** (this may grow).
+
 ```
 ~/shared/odoo-src/
-├── 17.0/
-│   ├── community/    # CE source
-│   ├── enterprise/   # EE source
-│   └── oca/
-└── 18.0/
-    ├── community/    # CE source — read this before implementing anything
-    ├── enterprise/   # EE source
-    └── oca/
-        ├── mail/
-        ├── partner-contact/
-        ├── queue/
-        ├── server-backend/
-        ├── server-tools/
-        └── web/
+└── <version>/            # e.g. 17.0 … 20.0
+    ├── community/        # CE source — read this before implementing anything
+    ├── enterprise/       # EE source (when cloned)
+    ├── oca/              # OCA modules available for this version
+    └── cetmix/           # Cetmix modules (when cloned)
 ```
+
+Add a version or repo with `/add-odoo-src <repo> <version>`, and refresh every
+cloned repo with `/update-odoo-src` (both live in the opencode dev-environment repo).
 
 Always read the actual source before using a mixin or utility. Don't rely on memory.
 

@@ -28,7 +28,7 @@ Every `__manifest__.py` must have:
 | Key | Requirement |
 |---|---|
 | `name` | Human-readable display name |
-| `version` | `<odoo>.<major>.<minor>.<patch>` e.g. `18.0.1.0.0` |
+| `version` | `<odoo>.<major>.<minor>.<patch>` e.g. `20.0.1.0.0` (prefix matches the project's Odoo series) |
 | `category` | Valid Odoo category string |
 | `summary` | Short one-line description |
 | `author` | Organization name |

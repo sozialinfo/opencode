@@ -92,6 +92,14 @@ This will:
 The shared Odoo source at `~/shared/odoo-src/<version>/` must be consulted
 for any Category 10 (Standard Pattern Compliance) findings before flagging them.
 
+Reuse the house-rule and security skills instead of re-deriving rules per finding:
+
+```
+skill({ name: "odoo-review" })     # guidelines + security pass over the changed files
+skill({ name: "odoo-security" })   # focused audit: access, sudo, SQL, RPC, XSS
+skill({ name: "odoo-guidelines" }) # addon house rules behind the audit categories
+```
+
 ### Step 4: Execute All Tasks (Apply Phase)
 
 Load and execute the apply skill:

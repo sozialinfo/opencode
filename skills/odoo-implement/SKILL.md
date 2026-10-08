@@ -1,6 +1,6 @@
 ---
 name: odoo-implement
-description: Implement Odoo features with full Definition of Done enforcement - creates proposal, implements tasks, ensures tests, translations, and fresh instance
+description: Implement Odoo features (Phase 1 vibe coding) - proposes, implements, deploys, and smoke-tests a feature; translations, coverage gates, and fresh rebuild are deferred to Phase 2 (/odoo-harden)
 license: MIT
 metadata:
   author: opencode

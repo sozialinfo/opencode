@@ -53,14 +53,15 @@ for each feature:
 │   └── reference-phase2.md    ← Full DoD, 10-category audit, coverage, translations
 │
 └── skills/
-    ├── odoo-explore/
-    │   └── SKILL.md           ← Wraps openspec-explore + reference-phase1.md
-    ├── odoo-implement/
-    │   └── SKILL.md           ← Phase 1: propose + apply + deploy + bug-fix loop
-    ├── odoo-harden/
-    │   └── SKILL.md           ← Phase 2: whole-project audit + remediation
-    └── odoo-finalize/
-        └── SKILL.md           ← Wraps openspec-archive + git commit + push
+    ├── odoo-explore/          ← Wraps openspec-explore + reference-phase1.md
+    ├── odoo-implement/        ← Phase 1: propose + apply + deploy + bug-fix loop
+    ├── odoo-harden/           ← Phase 2: whole-project audit + remediation
+    ├── odoo-finalize/         ← Wraps openspec-archive + git commit + push
+    ├── odoo-worktree-setup/   ← Worktree container/DB/Caddy/env setup (called by odoo-implement)
+    ├── odoo-guidelines/       ← Addon house rules (Python/ORM, fields, XML, reports, security, tests)
+    ├── odoo-web-guidelines/   ← static/ house rules (JS, Owl templates, SCSS)
+    ├── odoo-security/         ← Security audit material (used by review + harden)
+    └── odoo-review/           ← Review a diff/commit/PR against the house rules
 
 ~/.local/share/openspec/schemas/
 └── harden-driven/             ← Global openspec schema for hardening changes
@@ -90,6 +91,13 @@ odoo-explore   ──▶  openspec-explore   + reference-phase1.md context
 odoo-implement ──▶  openspec-propose + openspec-apply + Phase 1 DoD
 odoo-harden    ──▶  openspec-propose (harden-driven) + openspec-apply + Phase 2 DoD
 odoo-finalize  ──▶  openspec-archive + git commit + push
+
+Supporting skills (not OpenSpec wrappers):
+odoo-worktree-setup ──▶ worktree container/DB/Caddy/env setup (idempotent, called by odoo-implement)
+odoo-guidelines     ──▶ Odoo addon house rules (Python/ORM, fields, XML, reports, security, tests)
+odoo-web-guidelines ──▶ static/ house rules (JS, Owl, SCSS)
+odoo-security       ──▶ security audit material (used by odoo-review and odoo-harden)
+odoo-review         ──▶ dispatch a diff/commit/PR across guidelines + security
 ```
 
 OpenSpec skill improvements automatically benefit the Odoo workflow.
@@ -161,16 +169,13 @@ openspec new change "project-hardening" --schema harden-driven
 ### Adding a New Skill
 
 1. Create directory: `~/.config/opencode/skills/odoo-<name>/`
-2. Create `SKILL.md` with required YAML frontmatter:
+2. Create `SKILL.md` with the required YAML frontmatter (`name` and `description`).
+   `license` and `metadata` are optional — some skills include them:
 
 ```yaml
 ---
 name: odoo-<name>
 description: Brief description (1-1024 chars)
-license: MIT
-metadata:
-  author: your-name
-  version: "1.0"
 ---
 ```
 
@@ -224,7 +229,7 @@ Odoo projects are identified by:
 1. `docker-compose.yml` with `image: odoo:<version>`
 2. `addons/` directory with Odoo modules
 
-**Version:** parsed from Docker image tag (e.g., `odoo:18.0` → `18.0`)
+**Version:** parsed from the Docker image tag (e.g., `odoo:<version>`); supported: 17.0–20.0
 **Edition:** CE = no enterprise volume; EE = enterprise addons volume mounted
 **Container/DB:** always read from `docker-compose.override.yml` and `odoo.conf`
 
@@ -251,7 +256,7 @@ Key points:
 - Use `docker run` (not `docker compose exec`) for test isolation
 - Use unique DB names with timestamp suffix
 - Use `-T` flag with `docker compose exec` for non-interactive execution
-- `--no-http` does NOT work reliably in Odoo 18
+- `--no-http` does NOT work reliably in Odoo 18+
 
 ---
 
@@ -281,6 +286,8 @@ ls ~/.local/share/openspec/schemas/harden-driven/
 
 | Date | Change |
 |---|---|
+| 2026-10-08 | Added Odoo 20 to supported versions and shared sources |
+| 2026-10-08 | Documented odoo-guidelines / odoo-web-guidelines / odoo-security / odoo-review / odoo-worktree-setup |
 | 2026-05-03 | Two-phase redesign: implement (Phase 1) + harden (Phase 2) |
 | 2026-05-03 | Added harden-driven global openspec schema |
 | 2026-05-03 | Split reference.md into reference-phase1.md + reference-phase2.md |
